@@ -1,0 +1,12 @@
+{
+  "tasks": {
+    "dev": "deno run --watch -A server.ts"
+  },
+  "imports": {
+    "express": "npm:express",
+    "ws": "npm:ws",
+    "puppeteer": "https://deno.land/x/puppeteer@16.2.0/mod.ts",
+    "jsdom": "npm:jsdom",
+    "ejs": "npm:ejs"
+  }
+}

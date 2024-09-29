@@ -122,14 +122,36 @@ wss.on("connection", async (ws) => {
       const target = document.querySelector(data.selector) as HTMLElement;
       if (target) {
         switch (data.eventType) {
-          case 'click':
-            target.click();
-            break;
           case 'change':
             var nativeInputValueSetter = dom.window.Object.getOwnPropertyDescriptor(dom.window.HTMLInputElement.prototype, "value").set;
             nativeInputValueSetter.call(target, data.value);
             var event = new dom.window.Event('input', { bubbles: true });
             target.dispatchEvent(event);
+            break;
+          case 'click':
+          case 'dblclick':
+          case 'mouseover':
+          case 'mouseout':
+          case 'mousedown':
+          case 'mouseup':
+          case 'mousemove':
+            target.dispatchEvent(new dom.window.MouseEvent(data.eventType, { bubbles: true }));
+            break;
+          case 'keydown':
+          case 'keypress':
+          case 'keyup':
+            target.dispatchEvent(new dom.window.KeyboardEvent(data.eventType, { bubbles: true }));
+            break;
+          case 'focus':
+          case 'blur':
+            target.dispatchEvent(new dom.window.FocusEvent(data.eventType, { bubbles: true }));
+            break;
+          case 'submit':
+          case 'reset':
+          case 'resize':
+          case 'scroll':
+          case 'select':
+            target.dispatchEvent(new dom.window.Event(data.eventType, { bubbles: true }));
             break;
         }
       }

@@ -73,20 +73,26 @@ function getSelection(target) {
     return selector;
 }
 
-// Send client-side events to the server
-document.addEventListener('click', (event) => {
+// Function to send event data to the server
+function sendEventToServer(eventType, event) {
     ws.send(JSON.stringify({
         type: 'event',
-        eventType: 'click',
+        eventType: eventType,
         selector: getSelection(event.target),
+        value: event.target.value
     }));
-});
+}
 
-document.addEventListener('change', (event) => {
-    ws.send(JSON.stringify({
-        type: 'event',
-        eventType: 'change',
-        selector: getSelection(event.target),
-        value: event.target.value,
-    }));
+// List of events to listen for
+const events = [
+    'click', 'dblclick', 'change', 'mouseover', 'mouseout', 'mousedown', 'mouseup', 'mousemove',
+    'keydown', 'keypress', 'keyup', 'focus', 'blur', 'submit', 'reset',
+    'resize', 'scroll', 'select'
+];
+
+// Add event listeners for all events
+events.forEach(eventType => {
+    document.addEventListener(eventType, (event) => {
+        sendEventToServer(eventType, event);
+    }, true);
 });

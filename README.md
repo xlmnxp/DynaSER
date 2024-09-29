@@ -1,6 +1,6 @@
 # DynaSER (Dynamic Server-Enhanced Rendering)
 
-DynaSER is a cutting-edge web rendering solution that combines server-side rendering (SSR) with real-time interactivity. It leverages Deno, Puppeteer, and WebSockets to create a seamless, dynamic user experience while maintaining the benefits of server-side rendering.
+DynaSER is a cutting-edge web rendering solution that combines server-side rendering (SSR) with real-time interactivity. It leverages JSDOM, and WebSockets to create a seamless, dynamic user experience while maintaining the benefits of server-side rendering.
 
 ## Features
 
@@ -35,19 +35,19 @@ DynaSER is a cutting-edge web rendering solution that combines server-side rende
 
 ## How It Works
 
-1. The server uses Puppeteer to render a web page server-side.
+1. The server uses JSDOM to render a web page server-side.
 2. When a client connects, the server sends the initial HTML content with all JavaScript and event handlers removed.
-3. The server sets up a MutationObserver on the Puppeteer page to watch for DOM changes.
+3. The server sets up a MutationObserver on the JSDOM page to watch for DOM changes.
 4. When changes occur, the server sends these changes to the client via WebSocket.
 5. The client applies these changes to its DOM, keeping it in sync with the server-side render.
-6. User interactions on the client are sent back to the server, which applies them to the Puppeteer page.
+6. User interactions on the client are sent back to the server, which applies them to the JSDOM page.
 
 ## Configuration
 
 You can modify the `server.ts` file to change the following:
 
 - Port numbers for the Express server, and WebSocket server
-- The initial URL loaded in Puppeteer
+- The initial URL loaded in JSDOM
 - The elements observed for mutations
 - The types of events listened for and transmitted
 
@@ -62,7 +62,6 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 - [Deno](https://deno.land/) for the runtime environment
-- [Puppeteer](https://pptr.dev/) for server-side browser automation
 - [Express](https://expressjs.com/) for the web server framework
 - [ws](https://github.com/websockets/ws) for WebSocket implementation
 

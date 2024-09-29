@@ -22,10 +22,15 @@ ws.onmessage = (event) => {
                 if (element) element.remove();
             });
 
-            if (data.attribute.name === 'value') {
-                target.value = data.attribute.value;
-            } else {
-                target.setAttribute(data.attribute.name, data.attribute.value);
+            switch (data.attribute?.name) {
+                case 'value':
+                    target.value = data.attribute.value;
+                    break;
+                default:
+                    if (data.attribute) {
+                        target.setAttribute(data.attribute.name, data.attribute.value);
+                    }
+                    break;
             }
         }
     } else if (data.type === 'event') {

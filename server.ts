@@ -1,7 +1,7 @@
 // server.ts
 import express from "express";
 import { WebSocketServer } from "ws";
-import { JSDOM } from "jsdom";
+import { JSDOM, VirtualConsole } from "jsdom";
 import { createServer } from "node:http";
 import { removeJavaScriptAndEvents } from "./utils/common.ts";
 
@@ -16,8 +16,11 @@ let dom: JSDOM;
 let websocket: WebSocket;
 
 async function setupJSDOM() {
-  if (dom) // shared same content for all clients to test the idea
-    return;
+  // if (dom) // shared same content for all clients to test the idea
+  //   return;
+
+  const virtualConsole = new VirtualConsole();
+  virtualConsole.sendTo(console);
 
   const response = await fetch(url);
   const html = await response.text();
@@ -26,7 +29,8 @@ async function setupJSDOM() {
     runScripts: "dangerously",
     resources: "usable",
     includeNodeLocations: true,
-    pretendToBeVisual: true
+    pretendToBeVisual: true,
+    virtualConsole
   });
 
   const { window } = dom;

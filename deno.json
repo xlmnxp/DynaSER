@@ -6,6 +6,7 @@
     "express": "npm:express",
     "ws": "npm:ws",
     "jsdom": "npm:jsdom",
+    "canvas": "npm:canvas",
     "ejs": "npm:ejs"
   }
 }
